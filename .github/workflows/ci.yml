@@ -9,8 +9,7 @@ on:
   workflow_dispatch: {}
   schedule:
     # Agendamento para rodar a pipeline diariamente às 13h (UTC-3)
-    schedule:
-  - cron: '0 16 * * *'  # 13h UTC-3 (16h UTC)
+    - cron: '0 16 * * *'  # 13h UTC-3 (16h UTC)
 
 jobs:
   unit-tests:
