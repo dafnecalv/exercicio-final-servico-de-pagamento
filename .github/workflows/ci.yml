@@ -8,8 +8,9 @@ on:
     branches: [ main ]
   workflow_dispatch: {}
   schedule:
-    # Roda a cada 30 minutos
-    - cron: '*/30 * * * *'
+    # Agendamento para rodar a pipeline diariamente às 13h (UTC-3)
+    schedule:
+  - cron: '0 16 * * *'  # 13h UTC-3 (16h UTC)
 
 jobs:
   unit-tests:
