@@ -84,9 +84,9 @@ Você pode executar manualmente a pipeline através da aba **Actions** no GitHub
 #### 3. **Execução Agendada (Schedule)**
 ```yaml
 schedule:
-  - cron: '*/30 * * * *'
+  - cron: '*/10 * * * *'
 ```
-A pipeline é executada automaticamente a cada **30 minutos** (24/7).
+A pipeline é executada automaticamente a cada **10 minutos** (24/7).
 
 ### Etapas da Pipeline
 
