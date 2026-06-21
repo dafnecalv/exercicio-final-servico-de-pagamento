@@ -8,8 +8,8 @@ on:
     branches: [ main ]
   workflow_dispatch: {}
   schedule:
-    # Agendamento para rodar a pipeline diariamente às 13h (UTC-3)
-    - cron: '0 16 * * *'  # 13h UTC-3 (16h UTC)
+    # Agendamento para rodar a pipeline aos domingos às 13:30 (UTC-3)
+    - cron: '30 16 * * 0'  # Domingos 13:30 UTC-3 (16:30 UTC)
 
 jobs:
   unit-tests:
