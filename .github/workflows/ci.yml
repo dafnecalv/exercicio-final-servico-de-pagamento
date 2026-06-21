@@ -46,10 +46,4 @@ jobs:
           name: mochawesome-report
           path: reports/**
 
-      - name: Upload Pages artifact
-        if: ${{ always() }}
-        # Prepara os artefatos para publicação no GitHub Pages
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: reports
 
