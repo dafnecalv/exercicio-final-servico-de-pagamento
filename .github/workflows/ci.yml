@@ -1,4 +1,6 @@
 
+# Pipeline de integração contínua para o projeto
+# Executa a cada push na branch main, manualmente e em schedule.
 name: 'N4 - Execução da pipeline de CI'
 
 on:
@@ -11,28 +13,55 @@ on:
 
 jobs:
   unit-tests:
+    # Job que roda os testes unitários e gera o relatório HTML
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
+        # Clona o repositório para o runner
         uses: actions/checkout@v4
 
       - name: Setup Node.js
+        # Instala o Node.js na versão especificada
         uses: actions/setup-node@v4
         with:
           node-version: '18'
 
       - name: Install dependencies
+        # Instala as dependências definidas no package.json
         run: npm ci
 
       - name: Prepare report folder
+        # Cria a pasta onde o relatório HTML será salvo
         run: mkdir -p reports
 
       - name: Run tests (HTML report)
+        # Executa o Mocha com o reporter mochawesome para gerar o relatório HTML
         run: npx mocha --reporter mochawesome --reporter-options reportDir=reports,reportFilename=mochawesome,quiet=true
 
       - name: Upload HTML test report
         if: ${{ always() }}
+        # Faz upload do relatório HTML como artefato da pipeline
         uses: actions/upload-artifact@v4
         with:
           name: mochawesome-report
           path: reports/**
+
+      - name: Upload Pages artifact
+        if: ${{ always() }}
+        # Prepara os artefatos para publicação no GitHub Pages
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: reports
+
+  pages:
+    needs: unit-tests
+    # Job que publica o conteúdo gerado no GitHub Pages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        # Publica a pasta de relatórios no Pages
+        uses: actions/deploy-pages@v1
